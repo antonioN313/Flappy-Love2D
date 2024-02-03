@@ -17,6 +17,10 @@
 -- virtual resolution handling library
 push = require 'push'
 
+Class = require 'class'
+
+require 'Bird'
+
 -- physical screen dimensions
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -36,6 +40,8 @@ local BACKGROUND_SCROLL_SPEED = 30
 local GROUND_SCROLL_SPEED = 60
 
 local BACKGROUND_LOOPING_POINT = 413
+
+local bird = Bird()
 
 function love.load()
     -- initialize our nearest-neighbor filter
@@ -74,6 +80,8 @@ function love.draw()
 
     -- draw the ground on top of the background, toward the bottom of the screen
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
+
+    bird:render()
     
     push:finish()
 end
