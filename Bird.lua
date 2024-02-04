@@ -1,5 +1,7 @@
 Bird = Class{}
 
+local GRAVITY = 10
+
 function Bird:init()
     -- load bird.png
     self.image = love.graphics.newImage('/images/bird.png')
@@ -9,6 +11,13 @@ function Bird:init()
     --position of the bird
     self.x = VIRTUAL_WIDTH / 2 - (self.width / 2)
     self.y = VIRTUAL_HEIGHT / 2 - (self.height / 2)
+
+    self.dy = 0
+end
+
+function Bird:update(dt)
+	self.dy = self.dy + GRAVITY * dt
+	self.y = self.y + self.dy
 end
 
 function Bird:render()
