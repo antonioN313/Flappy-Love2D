@@ -17,12 +17,42 @@ PIPE_HEIGHT = 288
 BIRD_WIDTH = 38
 BIRD_HEIGHT = 24
 
+-- Simple pause function inside the class
+function PlayState:pause()
+	
+	if not love.keyboard.wasPressed('p') then return self.paused end
+	
+	sounds['pause']:play()
+	
+	if self.paused then
+		self.paused = false
+		scrolling = true
+		sounds['music']:play()
+		return false
+	end
+	
+	self.paused = true
+	scrolling = false
+	sounds['music']:pause()
+	return true
+
+	
+	
+end
+
 function PlayState:init()
     self.bird = Bird()
     self.pipePairs = {}
     self.timer = 0
     self.score = 0
-
+    self.next_pipe = math.random(2,4)
+    self.paused = false
+	self.pause_image = love.graphics.newImage('/images/pause.png')
+	self.pause_width = 900
+	self.pause_height = 900
+	self.pause_scale = 0.2
+	self.pause_x = VIRTUAL_WIDTH / 2 - (self.pause_width*self.pause_scale)/2
+	self.pause_y = VIRTUAL_HEIGHT / 2 - (self.pause_height*self.pause_scale)/2
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
 end
@@ -32,7 +62,7 @@ function PlayState:update(dt)
     self.timer = self.timer + dt
 
     -- spawn a new pipe pair every second and a half
-    if self.timer > 2 then
+    if self.timer > self.next_pipe then
         -- modify the last Y coordinate we placed so pipe gaps aren't too far apart
         -- no higher than 10 pixels below the top edge of the screen,
         -- and no lower than a gap length (90 pixels) from the bottom
@@ -43,8 +73,8 @@ function PlayState:update(dt)
         -- add a new pipe pair at the end of the screen at our new Y
         table.insert(self.pipePairs, PipePair(y))
 
-        -- reset timer
-        self.timer = 0
+        self.timer = self.timer - self.next_pipe
+		self.next_pipe = math.random(2,4)
     end
 
     -- for every pair of pipes..
@@ -105,6 +135,10 @@ function PlayState:render()
     love.graphics.print('Score: ' .. tostring(self.score), 8, 8)
 
     self.bird:render()
+
+    if self.paused then
+		love.graphics.draw(self.pause_image, self.pause_x, self.pause_y, 0, self.pause_scale, self.pause_scale)
+	end
 end
 
 function PlayState:enter()
