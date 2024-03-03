@@ -58,6 +58,9 @@ function PlayState:init()
 end
 
 function PlayState:update(dt)
+
+    -- Check for pause
+	if self:pause() then return end
     -- update timer for pipe spawning
     self.timer = self.timer + dt
 
