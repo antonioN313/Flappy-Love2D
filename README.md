@@ -6,7 +6,7 @@ Desenvolvido pelo programador vietnamita Dong Nguyen e publicado pela desenvolve
 
 ### Objetivos
 
-* recriar o jogo Pong no framework gráfico [Love2D](https://love2d.org/) que utiliza a linguagem [Lua](https://www.lua.org/) como sua linguagem de desenvolvimento, acompanhando as aulas do [CS50 em desenvolvimento de jogos](https://cs50.harvard.edu/games)
+* recriar o jogo Flappy Bird no framework gráfico [Love2D](https://love2d.org/) que utiliza a linguagem [Lua](https://www.lua.org/) como sua linguagem de desenvolvimento, acompanhando as aulas do [CS50 em desenvolvimento de jogos](https://cs50.harvard.edu/games)
 
 * Adicionar Sprites pelo Love2D
 * Implementar Controle de Mouse
